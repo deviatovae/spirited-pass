@@ -13,5 +13,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.18.0"
+  },
+  "prisma": {
+    "seed": "node --experimental-strip-types prisma/seeds.ts"
   }
 }
