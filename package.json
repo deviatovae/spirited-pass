@@ -7,7 +7,8 @@
     "dev": "concurrently \"npm:dev:api\" \"npm:dev:app\"",
     "dev:api": "cd api && npm run start:dev",
     "dev:app": "cd app && npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,15 @@
     "common",
     "api",
     "app"
-  ]
+  ],
+  "devDependencies": {
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "prettier-plugin-prisma": "^5.0.0"
+  },
+  "lint-staged": {
+    "*": "prettier --check --ignore-unknown",
+    "*.{js,jsx,ts,tsx}": "npm run eslint"
+  }
 }
