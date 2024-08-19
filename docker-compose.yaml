@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: spirit
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - spirit
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/spirit
+    depends_on:
+      - postgres
+    ports:
+      - '3001:3000'
+    networks:
+      - spirit
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_URL: http://api:3001
+    depends_on:
+      - api
+    ports:
+      - '3000:3000'
+    networks:
+      - spirit
+
+volumes:
+  postgres_data:
+
+networks:
+  spirit:
