@@ -26,6 +26,10 @@ services:
       - .env.dev
       - path: .env
         required: false
+    volumes:
+      - ./api:/api
+      - /api/node_modules
+      - ./common:/common
 
   app:
     build:
@@ -43,6 +47,10 @@ services:
       - .env.dev
       - path: .env
         required: false
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+      - ./common:/common
 
 volumes:
   postgres_data:
