@@ -1,0 +1,24 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Station {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  Ticket Ticket[]
+}
+
+model Ticket {
+  id       Int      @id @default(autoincrement())
+  name     String
+  issuedAt DateTime @default(now()) @db.Timestamptz
+
+  station   Station @relation(fields: [stationId], references: [id])
+  stationId Int
+}

@@ -7,6 +7,8 @@ services:
       POSTGRES_DB: spirit
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
     networks:
       - spirit
 
@@ -14,14 +16,16 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/spirit
     depends_on:
       - postgres
     ports:
       - '3001:3000'
     networks:
       - spirit
+    env_file:
+      - .env.dev
+      - path: .env
+        required: false
 
   app:
     build:
@@ -35,6 +39,10 @@ services:
       - '3000:3000'
     networks:
       - spirit
+    env_file:
+      - .env.dev
+      - path: .env
+        required: false
 
 volumes:
   postgres_data:
