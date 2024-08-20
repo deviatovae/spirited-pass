@@ -21,7 +21,7 @@ export class StationController {
     },
   })
   @Get()
-  async getList(): Promise<StationDto[]> {
+  async getList() {
     return await this.station.getList();
   }
 }
