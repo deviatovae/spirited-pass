@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "openapi:generate": "npx typed-openapi /common/apiSchema.json -o src/api/schema.ts"
+    "openapi:generate": "npx typed-openapi ../common/apiSchema.json -o src/api/schema.ts"
   },
   "dependencies": {
     "common": "*",

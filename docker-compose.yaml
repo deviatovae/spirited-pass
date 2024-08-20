@@ -35,8 +35,6 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    environment:
-      BACKEND_URL: http://api:3001
     depends_on:
       - api
     ports:
