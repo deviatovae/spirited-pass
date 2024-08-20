@@ -10,6 +10,14 @@ import { AuthGuard } from './auth/auth.guard';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (!origin || /localhost(:\d+)?$/.test(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
+  });
   app.useGlobalGuards(new AuthGuard(app.get(JwtService), app.get(Reflector)));
   app.useGlobalPipes(new ValidationPipe());
 
