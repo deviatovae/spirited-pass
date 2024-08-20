@@ -19,6 +19,15 @@ model Ticket {
   name     String
   issuedAt DateTime @default(now()) @db.Timestamptz
 
+  train     Train   @relation(fields: [trainId], references: [id])
+  trainId   Int
   station   Station @relation(fields: [stationId], references: [id])
   stationId Int
+}
+
+model Train {
+  id          Int      @id @default(autoincrement())
+  seats       Int
+  departureAt DateTime @unique
+  tickets     Ticket[]
 }

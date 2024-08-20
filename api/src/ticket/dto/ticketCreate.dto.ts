@@ -5,6 +5,11 @@ import { Exist } from 'src/validation/exist.constraint';
 export class TicketCreateDto {
   @ApiProperty()
   @IsNumber()
+  @Exist('train')
+  trainId: number;
+
+  @ApiProperty()
+  @IsNumber()
   @Exist('station')
   stationId: number;
 

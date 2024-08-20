@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -7,16 +8,18 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { TicketCreateDto } from './dto/ticketCreate.dto';
-import { TicketUpdateDto } from './dto/ticketUpdate.dto';
-import { TicketService } from './ticket.service';
 import {
-  ApiUnauthorizedResponse,
+  ApiBadRequestResponse,
   ApiExtraModels,
   ApiResponse,
+  ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
 import { TicketDto } from './dto/ticket.dto';
+import { TicketCreateDto } from './dto/ticketCreate.dto';
+import { TicketUpdateDto } from './dto/ticketUpdate.dto';
+import { TicketService } from './ticket.service';
+import { BaseTicketException } from './exception/baseTicket.exception';
 
 @Controller('ticket')
 export class TicketController {
@@ -24,10 +27,18 @@ export class TicketController {
 
   @Post()
   @ApiUnauthorizedResponse()
+  @ApiBadRequestResponse({ description: 'Sorry! No more tickets.' })
   @ApiExtraModels(TicketDto)
   @ApiResponse({ status: 200, schema: { $ref: getSchemaPath(TicketDto) } })
-  create(@Body() dto: TicketCreateDto) {
-    return this.ticket.create(dto);
+  async create(@Body() dto: TicketCreateDto) {
+    try {
+      return await this.ticket.create(dto);
+    } catch (error) {
+      if (error instanceof BaseTicketException) {
+        throw new BadRequestException(error.message);
+      }
+      throw error;
+    }
   }
 
   @Patch()
