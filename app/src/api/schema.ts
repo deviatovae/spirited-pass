@@ -2,9 +2,10 @@ export namespace Schemas {
   // <Schemas>
   export type TokenResult = { token: string };
   export type StationDto = { id: number; name: string };
-  export type TicketDto = { station: StationDto; name: string; issuedAt: string };
-  export type TicketCreateDto = { stationId: number; name: string };
-  export type TicketUpdateDto = Partial<{ stationId: number; name: string }>;
+  export type TicketDto = { trainId: number; station: StationDto; name: string; issuedAt: string };
+  export type TicketCreateDto = { trainId: number; stationId: number; name: string };
+  export type TicketUpdateDto = Partial<{ trainId: number; stationId: number; name: string }>;
+  export type TrainDto = { id: number; seats: number; departureAt: string; availableTickets: number };
 
   // </Schemas>
 }
@@ -53,6 +54,13 @@ export namespace Endpoints {
     parameters: never;
     response: Array<Schemas.TicketDto>;
   };
+  export type get_TrainController_getTrain = {
+    method: "GET";
+    path: "/train";
+    requestFormat: "json";
+    parameters: never;
+    response: Schemas.TrainDto;
+  };
 
   // </Endpoints>
 }
@@ -66,6 +74,7 @@ export type EndpointByMethod = {
   get: {
     "/station": Endpoints.get_StationController_getList;
     "/ticket": Endpoints.get_TicketController_getList;
+    "/train": Endpoints.get_TrainController_getTrain;
   };
   patch: {
     "/ticket": Endpoints.patch_TicketController_update;

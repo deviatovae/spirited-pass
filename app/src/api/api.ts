@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createApiClient } from './schema';
+import { getAccessToken, setAccessToken } from '@/utils/tokenStorage';
 
 export const revalidate = 120;
 
@@ -28,7 +29,7 @@ export const api = createApiClient(
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -46,7 +47,7 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
       const response = await api.post('/auth');
       originalRequest.headers.Authorization = `Bearer ${response.token}`;
-      localStorage.setItem('accessToken', response.token);
+      setAccessToken(response.token);
 
       return axiosClient(originalRequest);
     }
