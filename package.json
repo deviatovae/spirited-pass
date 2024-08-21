@@ -21,7 +21,6 @@
     "concurrently": "^8.2.2"
   },
   "workspaces": [
-    "common",
     "api",
     "app"
   ],
