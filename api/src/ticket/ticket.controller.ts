@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
@@ -20,6 +21,7 @@ import { TicketCreateDto } from './dto/ticketCreate.dto';
 import { TicketUpdateDto } from './dto/ticketUpdate.dto';
 import { TicketService } from './ticket.service';
 import { BaseTicketException } from './exception/baseTicket.exception';
+import { ErrorDto } from 'src/openapi/error.dto';
 
 @Controller('ticket')
 export class TicketController {
@@ -27,7 +29,8 @@ export class TicketController {
 
   @Post()
   @ApiUnauthorizedResponse()
-  @ApiBadRequestResponse({ description: 'Sorry! No more tickets.' })
+  @ApiExtraModels(ErrorDto)
+  @ApiBadRequestResponse({ schema: { $ref: getSchemaPath(ErrorDto) } })
   @ApiExtraModels(TicketDto)
   @ApiResponse({ status: 200, schema: { $ref: getSchemaPath(TicketDto) } })
   async create(@Body() dto: TicketCreateDto) {
@@ -41,7 +44,7 @@ export class TicketController {
     }
   }
 
-  @Patch()
+  @Patch(':id')
   @ApiUnauthorizedResponse()
   @ApiExtraModels(TicketDto)
   @ApiResponse({ status: 200, schema: { $ref: getSchemaPath(TicketDto) } })
@@ -57,5 +60,19 @@ export class TicketController {
   })
   getList() {
     return this.ticket.getList();
+  }
+
+  @Get(':id')
+  @ApiExtraModels(TicketDto)
+  @ApiResponse({
+    status: 200,
+    schema: { $ref: getSchemaPath(TicketDto) },
+  })
+  async get(@Param('id', ParseIntPipe) id: number) {
+    const ticket = await this.ticket.get(id);
+    if (!ticket) {
+      throw new NotFoundException();
+    }
+    return ticket;
   }
 }

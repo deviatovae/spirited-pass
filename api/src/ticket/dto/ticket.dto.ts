@@ -3,6 +3,9 @@ import * as R from 'remeda';
 import { StationDto } from 'src/station/dto/station.dto';
 export class TicketDto {
   @ApiProperty()
+  id: number;
+
+  @ApiProperty()
   trainId: number;
 
   @ApiProperty()
@@ -17,7 +20,7 @@ export class TicketDto {
   constructor(values: TicketDto) {
     Object.assign(
       this,
-      R.pick(values, ['trainId', 'station', 'name', 'issuedAt']),
+      R.pick(values, ['id', 'trainId', 'station', 'name', 'issuedAt']),
     );
   }
 }

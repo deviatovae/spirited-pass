@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 interface Props {
   name: string;
@@ -7,10 +7,9 @@ interface Props {
 }
 
 export const Station = ({ name, destinationImg, onClick }: Props) => {
-  console.log(destinationImg);
   return (
     <div
-      className="flex flex-col shrink-0 center gap-1 border-2 border-black rounded-lg bg-white"
+      className="flex flex-col shrink-0 center gap-1 border-2 border-black rounded-lg bg-white cursor-pointer"
       onClick={onClick}
     >
       <div className="p-2 w-300">

@@ -2,7 +2,8 @@ export namespace Schemas {
   // <Schemas>
   export type TokenResult = { token: string };
   export type StationDto = { id: number; name: string; image: string };
-  export type TicketDto = { trainId: number; station: StationDto; name: string; issuedAt: string };
+  export type TicketDto = { id: number; trainId: number; station: StationDto; name: string; issuedAt: string };
+  export type ErrorDto = { error: string; message: string; statusCode: number };
   export type TicketCreateDto = { trainId: number; stationId: number; name: string };
   export type TicketUpdateDto = Partial<{ trainId: number; stationId: number; name: string }>;
   export type TrainDto = { id: number; seats: number; departureAt: string; availableTickets: number };
@@ -15,30 +16,37 @@ export namespace Endpoints {
 
   export type post_AuthController_getJWT = {
     method: "POST";
-    path: "/auth";
+    path: "/api/auth";
     requestFormat: "json";
     parameters: never;
     response: Schemas.TokenResult;
   };
   export type get_StationController_getList = {
     method: "GET";
-    path: "/station";
+    path: "/api/station";
     requestFormat: "json";
     parameters: never;
     response: Array<Schemas.StationDto>;
   };
   export type post_TicketController_create = {
     method: "POST";
-    path: "/ticket";
+    path: "/api/ticket";
     requestFormat: "json";
     parameters: {
       body: Schemas.TicketCreateDto;
     };
     response: Schemas.TicketDto;
   };
+  export type get_TicketController_getList = {
+    method: "GET";
+    path: "/api/ticket";
+    requestFormat: "json";
+    parameters: never;
+    response: Array<Schemas.TicketDto>;
+  };
   export type patch_TicketController_update = {
     method: "PATCH";
-    path: "/ticket";
+    path: "/api/ticket/{id}";
     requestFormat: "json";
     parameters: {
       path: { id: number };
@@ -47,16 +55,18 @@ export namespace Endpoints {
     };
     response: Schemas.TicketDto;
   };
-  export type get_TicketController_getList = {
+  export type get_TicketController_get = {
     method: "GET";
-    path: "/ticket";
+    path: "/api/ticket/{id}";
     requestFormat: "json";
-    parameters: never;
-    response: Array<Schemas.TicketDto>;
+    parameters: {
+      path: { id: number };
+    };
+    response: Schemas.TicketDto;
   };
   export type get_TrainController_getTrain = {
     method: "GET";
-    path: "/train";
+    path: "/api/train";
     requestFormat: "json";
     parameters: never;
     response: Schemas.TrainDto;
@@ -68,16 +78,17 @@ export namespace Endpoints {
 // <EndpointByMethod>
 export type EndpointByMethod = {
   post: {
-    "/auth": Endpoints.post_AuthController_getJWT;
-    "/ticket": Endpoints.post_TicketController_create;
+    "/api/auth": Endpoints.post_AuthController_getJWT;
+    "/api/ticket": Endpoints.post_TicketController_create;
   };
   get: {
-    "/station": Endpoints.get_StationController_getList;
-    "/ticket": Endpoints.get_TicketController_getList;
-    "/train": Endpoints.get_TrainController_getTrain;
+    "/api/station": Endpoints.get_StationController_getList;
+    "/api/ticket": Endpoints.get_TicketController_getList;
+    "/api/ticket/{id}": Endpoints.get_TicketController_get;
+    "/api/train": Endpoints.get_TrainController_getTrain;
   };
   patch: {
-    "/ticket": Endpoints.patch_TicketController_update;
+    "/api/ticket/{id}": Endpoints.patch_TicketController_update;
   };
 };
 

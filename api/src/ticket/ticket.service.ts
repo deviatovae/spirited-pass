@@ -16,6 +16,17 @@ export class TicketService {
     private config: ConfigService,
   ) {}
 
+  async get(id: number): Promise<TicketDto | null> {
+    const ticket = await this.prisma.ticket.findFirst({
+      include: { station: true },
+      where: { id },
+    });
+    if (ticket) {
+      return new TicketDto(ticket);
+    }
+    return null;
+  }
+
   async getList(): Promise<TicketDto[]> {
     return (
       await this.prisma.ticket.findMany({
