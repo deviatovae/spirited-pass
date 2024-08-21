@@ -7,5 +7,8 @@ COPY . .
 
 RUN npm install
 RUN npx prisma generate
+RUN npx prisma db seed
 
-CMD ["npm", "run", "start:dev"]
+EXPOSE 10000
+
+CMD ["npm", "run", "start"]

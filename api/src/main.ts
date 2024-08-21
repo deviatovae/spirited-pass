@@ -33,6 +33,6 @@ async function bootstrap() {
 
   writeFile('/common/apiSchema.json', JSON.stringify(document));
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }
 bootstrap();
