@@ -10,6 +10,7 @@ import { AuthGuard } from './auth/auth.guard';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin || /localhost(:\d+)?$/.test(origin)) {

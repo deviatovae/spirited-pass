@@ -4,9 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import useSWR from 'swr';
 
 export const useAvailableTrain = () => {
-  const { isLoading, data, mutate } = useSWR('getTrain', () =>
-    api.get('/train'),
-  );
+  const { isLoading, data, mutate } = useSWR('train', () => api.get('/train'));
 
   const [departureAfter, setDepartureAfter] = useState<number | null>(null);
   const remainingTime = useMemo(

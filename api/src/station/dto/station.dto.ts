@@ -6,4 +6,7 @@ export class StationDto {
 
   @ApiProperty()
   name: string;
+
+  @ApiProperty()
+  image: string;
 }

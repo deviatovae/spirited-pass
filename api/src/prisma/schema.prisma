@@ -8,8 +8,9 @@ generator client {
 }
 
 model Station {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int    @id @default(autoincrement())
+  name  String
+  image String
 
   Ticket Ticket[]
 }

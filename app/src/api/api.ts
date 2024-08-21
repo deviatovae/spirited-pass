@@ -4,13 +4,13 @@ import { getAccessToken, setAccessToken } from '@/utils/tokenStorage';
 
 export const revalidate = 120;
 
-const baseURL =
-  (typeof window === 'undefined'
-    ? process.env.API_URL
-    : process.env.NEXT_PUBLIC_API_URL) ?? '';
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
+export const serverApiURL = process.env.NEXT_PUBLIC_SERVER_API_URL;
+
+export const baseURL =
+  ((typeof window === 'undefined' ? serverApiURL : apiURL) ?? '') + 'api';
 
 const axiosClient = axios.create({
-  baseURL,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 export namespace Schemas {
   // <Schemas>
   export type TokenResult = { token: string };
-  export type StationDto = { id: number; name: string };
+  export type StationDto = { id: number; name: string; image: string };
   export type TicketDto = { trainId: number; station: StationDto; name: string; issuedAt: string };
   export type TicketCreateDto = { trainId: number; stationId: number; name: string };
   export type TicketUpdateDto = Partial<{ trainId: number; stationId: number; name: string }>;

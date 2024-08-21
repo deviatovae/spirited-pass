@@ -1,7 +1,9 @@
 'use client';
-import { Station } from './components/Station';
-import { useEffect, useState } from 'react';
+import { api, serverApiURL } from '@/api/api';
 import { Back } from '@/components/Back';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import { Station } from './components/Station';
 
 export type Destination = {
   name: string;
@@ -9,20 +11,12 @@ export type Destination = {
 };
 
 export default function Stations() {
-  const [selectedDestination, setSelectedDestination] =
-    useState<Destination | null>(null);
-  const destinations = [
-    { name: 'Bath House', image: '/images/bathhouse.png' },
-    { name: 'Swamp Beach', image: '/images/beach.webp' },
-    { name: 'Swamp Bottom', image: '/images/swampBottom.jpg' },
-  ];
-  const handleSelect = (destination: Destination) => {
-    setSelectedDestination(destination);
-  };
+  const { data: stations } = useSWR('stations', () => api.get('/station'));
+  const [stationId, setStationId] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log(selectedDestination);
-  }, [selectedDestination]);
+    console.log(stationId);
+  }, [stationId]);
 
   return (
     <>
@@ -32,12 +26,12 @@ export default function Stations() {
         <Back />
         <span className="text-3xl mb-3 inline-flex">AVAILABLE TICKETS</span>
         <div className="flex gap-2">
-          {destinations.map((d) => (
+          {stations?.map(({ id, name, image }) => (
             <Station
-              key={d.name}
-              name={d.name}
-              destinationImg={d.image}
-              onClick={() => handleSelect(d)}
+              key={id}
+              name={name}
+              destinationImg={serverApiURL + image}
+              onClick={() => setStationId(id)}
             />
           ))}
         </div>

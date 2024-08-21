@@ -2,15 +2,20 @@ import { PrismaClient } from '@prisma/client';
 
 export const prisma = new PrismaClient();
 
-const stations: string[] = ['Bath House', 'Swamp Beach', 'Swamp Bottom'];
+type Station = { name: string; image: string };
+const stations: Station[] = [
+  { name: 'Bath House', image: '/images/bathhouse.png' },
+  { name: 'Swamp Beach', image: '/images/beach.webp' },
+  { name: 'Swamp Bottom', image: '/images/swampBottom.jpg' },
+];
 
 async function main() {
-  stations.map(async (name, i) => {
+  stations.map(async ({ name, image }, i) => {
     const id = i + 1;
     await prisma.station.upsert({
       where: { id },
       update: {},
-      create: { id, name },
+      create: { id, name, image },
     });
   });
 }
