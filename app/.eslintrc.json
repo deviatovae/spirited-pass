@@ -1,4 +1,4 @@
 {
   "extends": ["next/core-web-vitals", "../.eslintrc.yaml"],
-  "ignorePatterns": ["api/schema.ts"]
+  "ignorePatterns": ["src/api/schema.ts"]
 }

@@ -1,6 +1,6 @@
 import { api } from '@/api/api';
-import { formatDate, differenceInSeconds } from 'date-fns';
-import { useState, useMemo, useEffect } from 'react';
+import { differenceInSeconds, format } from 'date-fns';
+import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 
 export const useAvailableTrain = () => {
@@ -10,7 +10,7 @@ export const useAvailableTrain = () => {
 
   const [departureAfter, setDepartureAfter] = useState<number | null>(null);
   const remainingTime = useMemo(
-    () => formatDate(new Date(0).setSeconds(departureAfter ?? 0), 'm:ss'),
+    () => format(new Date(0).setSeconds(departureAfter ?? 0), 'm:ss'),
     [departureAfter],
   );
 
