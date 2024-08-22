@@ -13,7 +13,12 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors({
     origin: (origin, callback) => {
-      if (!origin || /localhost(:\d+)?$/.test(origin)) {
+      if (
+        !origin ||
+        new RegExp(
+          `${process.env.CORS_ORIGIN_URL ?? ''.replace('.', '\\.')}(:\\d+)?$`,
+        ).test(origin)
+      ) {
         return callback(null, true);
       }
       return callback(new Error('Not allowed by CORS'));
