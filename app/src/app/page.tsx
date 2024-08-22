@@ -1,11 +1,11 @@
 'use client';
-import { useAvailableTrain } from '@/app/hooks/useAvailableTrain';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Loader } from '../components/Loader';
+import { useTrain } from './providers/TrainProvider';
 
 export default function Home() {
-  const { isLoading, data, remainingTime } = useAvailableTrain();
+  const { isLoading, data, remainingTime } = useTrain();
 
   return (
     <>
