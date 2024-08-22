@@ -11,19 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api');
-  app.enableCors({
-    origin: (origin, callback) => {
-      if (
-        !origin ||
-        new RegExp(
-          `${process.env.CORS_ORIGIN_URL ?? ''.replace('.', '\\.')}(:\\d+)?$`,
-        ).test(origin)
-      ) {
-        return callback(null, true);
-      }
-      return callback(new Error('Not allowed by CORS'));
-    },
-  });
+  app.enableCors();
   app.useGlobalGuards(new AuthGuard(app.get(JwtService), app.get(Reflector)));
   app.useGlobalPipes(new ValidationPipe());
 
