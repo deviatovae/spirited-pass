@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiExtraModels,
   ApiResponse,
   ApiUnauthorizedResponse,
@@ -8,6 +9,7 @@ import {
 import { StationDto } from './dto/station.dto';
 import { StationService } from './station.service';
 @Controller('station')
+@ApiBearerAuth()
 export class StationController {
   constructor(private station: StationService) {}
 

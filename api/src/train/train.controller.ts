@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiExtraModels,
   ApiResponse,
   ApiUnauthorizedResponse,
@@ -9,6 +10,7 @@ import { TrainDto } from './dto/train.dto';
 import { TrainService } from './train.service';
 
 @Controller('train')
+@ApiBearerAuth()
 export class TrainController {
   constructor(private train: TrainService) {}
 

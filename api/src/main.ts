@@ -20,6 +20,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Spirit Pass API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('openapi', app, document);

@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiExtraModels,
   ApiResponse,
   ApiUnauthorizedResponse,
@@ -24,6 +25,7 @@ import { BaseTicketException } from './exception/baseTicket.exception';
 import { ErrorDto } from 'src/openapi/error.dto';
 
 @Controller('ticket')
+@ApiBearerAuth()
 export class TicketController {
   constructor(private ticket: TicketService) {}
 
