@@ -31,7 +31,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('openapi', app, document);
 
-  writeFile('/common/apiSchema.json', JSON.stringify(document));
+  writeFile('./src/openapi/apiSchema.json', JSON.stringify(document));
 
   await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }

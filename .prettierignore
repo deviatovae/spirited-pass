@@ -1,2 +1,2 @@
-/common/apiSchema.json
+/api/src/openapi/apiSchema.json
 /app/src/api/schema.ts

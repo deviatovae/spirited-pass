@@ -30,7 +30,6 @@ services:
     volumes:
       - ./api:/api
       - /api/node_modules
-      - ./common:/common
 
   app:
     build:
@@ -50,7 +49,7 @@ services:
     volumes:
       - ./app:/app
       - /app/node_modules
-      - ./common:/common
+      - ./api/src/openapi/apiSchema.json:/app/apiSchema.json
 
 volumes:
   postgres_data:
