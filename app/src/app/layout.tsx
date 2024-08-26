@@ -3,6 +3,7 @@ import { Monomaniac_One } from 'next/font/google';
 import './globals.css';
 import { ToastProvider } from './providers/ToastProvider';
 import { TrainProvider } from './providers/TrainProvider';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const monomaniac = Monomaniac_One({ subsets: ['latin'], weight: '400' });
 
@@ -19,9 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={monomaniac.className}>
         <main className="relative flex min-h-screen flex-col items-center gap-4 p-4 md:p-16">
-          <TrainProvider>
-            <ToastProvider>{children}</ToastProvider>
-          </TrainProvider>
+          <ToastProvider>
+            <ErrorBoundary>
+              <TrainProvider>{children}</TrainProvider>
+            </ErrorBoundary>
+          </ToastProvider>
         </main>
       </body>
     </html>

@@ -1,10 +1,10 @@
 import Image from 'next/legacy/image';
 
-interface Props {
+type Props = {
   name: string;
   destinationImg: string;
   onClick: () => void;
-}
+};
 
 export const Station = ({ name, destinationImg, onClick }: Props) => {
   return (
